@@ -11,6 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.mobilesmartpiggy.ui.theme.MobileSmartPiggyTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,3 +48,4 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
