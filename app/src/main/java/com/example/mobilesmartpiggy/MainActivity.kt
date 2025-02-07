@@ -29,7 +29,8 @@ class MainActivity : ComponentActivity() {
             applicationContext,
             PigDatabase::class.java,
             name = "pigs.db"
-        ).build()
+        ).createFromAsset("pigs.db") /* TODO */
+            .build()
     }
     private val viewModel by viewModels<PigsViewModel>(
         factoryProducer = {
