@@ -25,7 +25,7 @@ class PigsViewModel (
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
     private val _state = MutableStateFlow(PigsState())
-    private val state = combine(_state, _sortType, _pigs) { state, sortType, pigs ->
+    val state = combine(_state, _sortType, _pigs) { state, sortType, pigs ->
         state.copy(
             pigs = pigs,
             sortType = sortType
