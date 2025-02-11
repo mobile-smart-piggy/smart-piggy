@@ -63,8 +63,9 @@ class MainActivity : ComponentActivity() {
 //            }
 //        }
 //    }
+}
 
-    @Composable
+@Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
         Text(
             text = "Hello $name!",
@@ -72,15 +73,13 @@ class MainActivity : ComponentActivity() {
         )
     }
 
-    @Preview(showBackground = true)
-    @Composable
-    fun GreetingPreview() {
-        MobileSmartPiggyTheme {
-            Greeting("Android")
-        }
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    MobileSmartPiggyTheme {
+        Greeting("Android")
     }
 }
-
 // @Override
 // 	    protected void onNewIntent(Intent intent){
 // 	        if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
