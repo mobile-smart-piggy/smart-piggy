@@ -23,6 +23,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.Room
 import com.example.mobilesmartpiggy.ui.theme.MobileSmartPiggyTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : ComponentActivity() {
 
@@ -43,17 +47,45 @@ class MainActivity : ComponentActivity() {
              }
         }
     )
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        enableEdgeToEdge()
+//        setContent {
+//            MobileSmartPiggyTheme {
+//                    val state by viewModel.state.collectAsState()
+//                    PigsScreen(state = state, onEvent = viewModel::onEvent)
+//                }
+//            }
+//        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val db by lazy {
+            Room.databaseBuilder(
+                applicationContext,
+                PigDatabase::class.java,
+                name = "pigs.db"
+            ).createFromAsset("pigs.db")
+                .build()
+        }
+        val pigDao = db.dao;
+        val pig: Flow<Pigs> = pigDao.getPigsById(129006)
+        val pigId: Int
+        runBlocking(Dispatchers.IO) {
+            pigId = pig.first().pigId
+        }
         setContent {
             MobileSmartPiggyTheme {
-                    val state by viewModel.state.collectAsState()
-                    PigsScreen(state = state, onEvent = viewModel::onEvent)
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Greeting(
+                        name = pigId.toString(),
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
-
+    }
 //    override fun onNewIntent(intent: Intent) {
 //        super.onNewIntent(intent)
 //        if (NfcAdapter.ACTION_NDEF_DISCOVERED == intent.action) {
@@ -67,6 +99,20 @@ class MainActivity : ComponentActivity() {
 
 @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
+//    val db by lazy {
+//        Room.databaseBuilder(
+//            applicationContext,
+//            PigDatabase::class.java,
+//            name = "pigs.db"
+//        ).createFromAsset("pigs.db")
+//            .build()
+//    }
+//    val pigDao = db.dao;
+//    val pig: Flow<Pigs> = pigDao.getPigsById(129006)
+//    val pigId: Int
+//    runBlocking(Dispatchers.IO) {
+//        pigId = pig.first().pigId
+//    }
         Text(
             text = "Hello $name!",
             modifier = modifier

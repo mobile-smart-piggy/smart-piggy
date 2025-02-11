@@ -16,12 +16,12 @@ interface PigsDAO {
     @Delete
     suspend fun deletePig(pigs: Pigs)
 
-    @Query("SELECT * FROM pigs ORDER BY pigId ASC")
-    fun getPigsById(): Flow<List<Pigs>>
+    @Query("SELECT * FROM itog WHERE NG = :pigId")
+    fun getPigsById(pigId: Int): Flow<Pigs>
 
-    @Query("SELECT * FROM pigs ORDER BY parentFemale ASC")
+    @Query("SELECT * FROM itog ORDER BY parentFemale ASC")
     fun getPigsByMom(): Flow<List<Pigs>>
 
-    @Query("SELECT * FROM pigs ORDER BY parentMale ASC")
+    @Query("SELECT * FROM itog ORDER BY parentMale ASC")
     fun getPigsByDad(): Flow<List<Pigs>>
 }
