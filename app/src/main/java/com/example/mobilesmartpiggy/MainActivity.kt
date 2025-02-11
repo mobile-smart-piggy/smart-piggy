@@ -1,5 +1,7 @@
 package com.example.mobilesmartpiggy
 
+import android.content.Intent
+import android.nfc.NfcAdapter
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -29,7 +31,7 @@ class MainActivity : ComponentActivity() {
             applicationContext,
             PigDatabase::class.java,
             name = "pigs.db"
-        ).createFromAsset("pigs.db") /* TODO */
+        ).createFromAsset("pigs.db")
             .build()
     }
     private val viewModel by viewModels<PigsViewModel>(
@@ -51,21 +53,47 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+//    override fun onNewIntent(intent: Intent) {
+//        super.onNewIntent(intent)
+//        if (NfcAdapter.ACTION_NDEF_DISCOVERED == intent.action) {
+//            intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)?.also { rawMessages ->
+//                val messages: List<NdefMessage> = rawMessages.map { it as NdefMessage }
+//                // Process the messages array.
+//            }
+//        }
+//    }
+
+    @Composable
+    fun Greeting(name: String, modifier: Modifier = Modifier) {
+        Text(
+            text = "Hello $name!",
+            modifier = modifier
+        )
     }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MobileSmartPiggyTheme {
-        Greeting("Android")
+    @Preview(showBackground = true)
+    @Composable
+    fun GreetingPreview() {
+        MobileSmartPiggyTheme {
+            Greeting("Android")
+        }
     }
 }
 
+// @Override
+// 	    protected void onNewIntent(Intent intent){
+// 	        if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
+// 	        mytag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);  // get the detected tag
+// 	        Parcelable[] msgs =
+// 	intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+// 	            NdefRecord firstRecord = ((NdefMessage)msgs[0]).getRecords()[0];
+// 	            byte[] payload = firstRecord.getPayload();
+// 	            int payloadLength = payload.length;
+// 	            int langLength = payload[0];
+// 	            int textLength = payloadLength - langLength - 1;
+// 	            byte[] text = new byte[textLength];
+// 	            System.arraycopy(payload, 1+langLength, text, 0, textLength);
+// 	            Toast.makeText(this, this.getString(R.string.ok_detection)+new String(text), Toast.LENGTH_LONG).show();
+// 	                    }
+// 	    }
